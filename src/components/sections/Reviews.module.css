@@ -1,0 +1,67 @@
+.reviews {
+  background-color: var(--background-gray);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  background-color: var(--background);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px var(--shadow);
+}
+
+.rating {
+  color: var(--accent);
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+}
+
+.content {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.category {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  background-color: var(--background-gray);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 24px;
+  }
+}

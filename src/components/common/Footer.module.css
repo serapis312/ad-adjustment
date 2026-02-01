@@ -1,0 +1,71 @@
+.footer {
+  background-color: var(--background-dark);
+  color: var(--text-white);
+  padding: 60px 0 30px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.companyName {
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+  color: var(--text-white);
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+}
+
+.contact h4,
+.hours h4 {
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.phone {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.mobile,
+.email {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+}
+
+.hours p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+}
+
+.holiday {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bottom {
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
