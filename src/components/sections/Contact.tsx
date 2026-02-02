@@ -4,6 +4,21 @@ import { companyInfo } from '../../data/content';
 import Button from '../common/Button';
 import styles from './Contact.module.css';
 
+// Google Form Entry IDs - Google Form 생성 후 실제 ID로 교체 필요
+const GOOGLE_FORM_CONFIG = {
+  // Google Form의 action URL (폼 편집 화면에서 확인)
+  // 형식: https://docs.google.com/forms/d/e/FORM_ID/formResponse
+  actionUrl: 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse',
+
+  // 각 필드의 entry ID (폼 미리보기에서 개발자도구로 확인)
+  fields: {
+    name: 'entry.XXXXXX',      // 이름 필드
+    phone: 'entry.XXXXXX',     // 연락처 필드
+    category: 'entry.XXXXXX', // 상담분야 필드
+    message: 'entry.XXXXXX',  // 상담내용 필드
+  },
+};
+
 export default function Contact() {
   const [form, setForm] = useState<ContactForm>({
     name: '',
@@ -11,6 +26,8 @@ export default function Contact() {
     category: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -19,11 +36,35 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 실제 폼 제출 로직 구현
-    alert('상담 신청이 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.');
-    setForm({ name: '', phone: '', category: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // FormData 생성
+      const formData = new FormData();
+      formData.append(GOOGLE_FORM_CONFIG.fields.name, form.name);
+      formData.append(GOOGLE_FORM_CONFIG.fields.phone, form.phone);
+      formData.append(GOOGLE_FORM_CONFIG.fields.category, form.category);
+      formData.append(GOOGLE_FORM_CONFIG.fields.message, form.message);
+
+      // Google Form은 CORS를 지원하지 않으므로 no-cors 모드 사용
+      await fetch(GOOGLE_FORM_CONFIG.actionUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData,
+      });
+
+      // no-cors 모드에서는 응답을 확인할 수 없으므로 성공으로 간주
+      setSubmitStatus('success');
+      setForm({ name: '', phone: '', category: '', message: '' });
+    } catch (error) {
+      console.error('폼 제출 오류:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -92,9 +133,21 @@ export default function Contact() {
               />
             </div>
 
-            <Button type="submit" fullWidth size="lg">
-              무료 상담 신청하기
+            <Button type="submit" fullWidth size="lg" disabled={isSubmitting}>
+              {isSubmitting ? '접수 중...' : '무료 상담 신청하기'}
             </Button>
+
+            {submitStatus === 'success' && (
+              <p className={styles.successMessage}>
+                상담 신청이 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.
+              </p>
+            )}
+
+            {submitStatus === 'error' && (
+              <p className={styles.errorMessage}>
+                접수 중 오류가 발생했습니다. 전화로 문의해 주세요.
+              </p>
+            )}
           </form>
 
           <div className={styles.info}>

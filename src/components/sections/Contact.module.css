@@ -103,6 +103,26 @@
   font-size: 0.9rem;
 }
 
+.successMessage {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-weight: 500;
+}
+
+.errorMessage {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
   .wrapper {
     grid-template-columns: 1fr;

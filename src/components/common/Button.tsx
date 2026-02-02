@@ -7,6 +7,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: 'button' | 'submit';
   fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -16,12 +17,14 @@ export default function Button({
   onClick,
   type = 'button',
   fullWidth = false,
+  disabled = false,
 }: ButtonProps) {
   return (
     <button
       type={type}
       className={`${styles.button} ${styles[variant]} ${styles[size]} ${fullWidth ? styles.fullWidth : ''}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
